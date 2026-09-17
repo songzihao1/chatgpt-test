@@ -5,14 +5,21 @@ on:
   pull_request:
 
 jobs:
-  verify-hello-file:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check hello.txt exists
-        run: test -f hello.txt
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
-      - name: Verify hello.txt content
-        run: grep -q "Hello from ChatGPT" hello.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: pytest
