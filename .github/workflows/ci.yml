@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify-hello-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check hello.txt exists
+        run: test -f hello.txt
+
+      - name: Verify hello.txt content
+        run: grep -q "Hello from ChatGPT" hello.txt
